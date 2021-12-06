@@ -43,10 +43,11 @@ func (f *FakeConfigStore) GetLatestAlertmanagerConfiguration(query *models.GetLa
 
 func (f *FakeConfigStore) SaveAlertmanagerConfiguration(cmd *models.SaveAlertmanagerConfigurationCmd) error {
 	f.configs[cmd.OrgID] = &models.AlertConfiguration{
-		AlertmanagerConfiguration: cmd.AlertmanagerConfiguration,
-		OrgID:                     cmd.OrgID,
-		ConfigurationVersion:      "v1",
-		Default:                   cmd.Default,
+		AlertmanagerConfiguration:     cmd.AlertmanagerConfiguration,
+		AlertmanagerConfigurationHash: cmd.AlertmanagerConfigurationHash,
+		OrgID:                         cmd.OrgID,
+		ConfigurationVersion:          "v1",
+		Default:                       cmd.Default,
 	}
 
 	return nil
@@ -54,16 +55,22 @@ func (f *FakeConfigStore) SaveAlertmanagerConfiguration(cmd *models.SaveAlertman
 
 func (f *FakeConfigStore) SaveAlertmanagerConfigurationWithCallback(cmd *models.SaveAlertmanagerConfigurationCmd, callback store.SaveCallback) error {
 	f.configs[cmd.OrgID] = &models.AlertConfiguration{
-		AlertmanagerConfiguration: cmd.AlertmanagerConfiguration,
-		OrgID:                     cmd.OrgID,
-		ConfigurationVersion:      "v1",
-		Default:                   cmd.Default,
+		AlertmanagerConfiguration:     cmd.AlertmanagerConfiguration,
+		AlertmanagerConfigurationHash: cmd.AlertmanagerConfigurationHash,
+		OrgID:                         cmd.OrgID,
+		ConfigurationVersion:          "v1",
+		Default:                       cmd.Default,
 	}
 
 	if err := callback(); err != nil {
 		return err
 	}
 
+	return nil
+}
+
+func (f *FakeConfigStore) UpdateAlertManagerConfiguration(cmd *models.SaveAlertmanagerConfigurationCmd) error {
+	// TODO(JP): implement
 	return nil
 }
 

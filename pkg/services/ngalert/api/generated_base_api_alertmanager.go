@@ -223,5 +223,15 @@ func (api *API) RegisterAlertmanagerApiEndpoints(srv AlertmanagerApiForkingServi
 				m,
 			),
 		)
+		group.Post(
+			toMacaronPath("/api/ngalert/templates"),
+			binding.Bind(apimodels.PostableTemplate{}),
+			metrics.Instrument(
+				http.MethodPost,
+				"/api/ngalert/templates",
+				srv.RoutePostTestReceivers,
+				m,
+			),
+		)
 	}, middleware.ReqSignedIn)
 }
